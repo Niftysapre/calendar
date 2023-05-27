@@ -35,3 +35,6 @@
     border: 1px solid #000000;
     z-index: 9999;
   }
+  .current-day {
+    background-color: cyan;
+}

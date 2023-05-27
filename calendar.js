@@ -11,6 +11,7 @@ let month = date.getMonth();
 
 draw(body, year, month);
 updateMonthName(month);
+highlightCurrentDay();
 
 function draw(body, year, month) {
     let arr = range(getLastDay(year, month));
@@ -23,24 +24,24 @@ function draw(body, year, month) {
 }
 
 function createTable(parent, arr) {
-    parent.textContent = '';
-    let cells = [];
+  parent.textContent = '';
+  let cells = [];
 
-    for (let sub of arr) {
-        let tr = document.createElement('tr');
+  for (let sub of arr) {
+      let tr = document.createElement('tr');
 
-        for (let num of sub) {
-            let td = document.createElement('td');
-            td.textContent = num;
-            tr.appendChild(td);
+      for (let num of sub) {
+          let td = document.createElement('td');
+          td.textContent = num;
+          tr.appendChild(td);
 
-            cells.push(td);
-        }
+          cells.push(td);
+      }
 
-        parent.appendChild(tr);
-    }
+      parent.appendChild(tr);
+  }
 
-    return cells;
+  return cells;
 }
 
 function normalize(arr, left, right) {
@@ -133,6 +134,23 @@ function getPrevMonth(month) {
     } else {
         return month - 1;
     }
+}
+
+function highlightCurrentDay() {
+  let today = new Date();
+  let currentYear = today.getFullYear();
+  let currentMonth = today.getMonth();
+  let currentDay = today.getDate();
+
+  if (year === currentYear && month === currentMonth) {
+      let cells = body.querySelectorAll('td');
+      for (let cell of cells) {
+          if (cell.textContent === String(currentDay)) {
+              cell.classList.add('current-day');
+              break;
+          }
+      }
+  }
 }
 
 next.addEventListener('click', function () {
